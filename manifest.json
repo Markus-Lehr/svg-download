@@ -1,0 +1,12 @@
+{
+  "name": "SVG Exporter",
+  "version": "0.1",
+  "manifest_version": 3,
+  "permissions": ["scripting", "activeTab"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["add-svg-buttons.js"]
+    }
+  ]
+}
