@@ -19,10 +19,10 @@ function getSvgUrl(element) {
     const serializer = new XMLSerializer();
     let source = serializer.serializeToString(element);
     //add name spaces.
-    if(!source.match(/^<svg[^>]+xmlns="http\:\/\/www\.w3\.org\/2000\/svg"/)){
+    if(!source.match(/^<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg"/)){
         source = source.replace(/^<svg/, '<svg xmlns="http://www.w3.org/2000/svg"');
     }
-    if(!source.match(/^<svg[^>]+"http\:\/\/www\.w3\.org\/1999\/xlink"/)){
+    if(!source.match(/^<svg[^>]+"http:\/\/www\.w3\.org\/1999\/xlink"/)){
         source = source.replace(/^<svg/, '<svg xmlns:xlink="http://www.w3.org/1999/xlink"');
     }
 
@@ -45,18 +45,19 @@ function downloadPng(element) {
     element.parentElement.appendChild(image);
     image.addEventListener('load', () => {
         let canvas = document.createElement('canvas');
-        canvas.width  = 1024;
-        canvas.height = canvas.width;
+        console.log('loaded image', image);
+        canvas.width  = image.naturalWidth;
+        canvas.height = image.naturalHeight;
         let ctx = canvas.getContext('2d');
         element.parentElement.appendChild(canvas);
-        ctx.drawImage(image, 0, 0);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         setTimeout(() => {
             let pngUrl = canvas.toDataURL();
             download(pngUrl, getName(element) + '.png');
             console.log(canvas);
             element.parentElement.removeChild(canvas);
             element.parentElement.removeChild(image);
-        }, 10);
+        }, 100);
     });
     image.src = getSvgUrl(element);
 }
