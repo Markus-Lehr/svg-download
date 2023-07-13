@@ -1,4 +1,3 @@
-console.log('Add svg button works');
 let svgElements = document.getElementsByTagName('svg');
 
 function getName(element) {
@@ -41,11 +40,9 @@ function downloadSvg(element) {
 
 function downloadPng(element) {
     let image = new Image();
-    console.log(image);
     element.parentElement.appendChild(image);
     image.addEventListener('load', () => {
         let canvas = document.createElement('canvas');
-        console.log('loaded image', image);
         canvas.width  = image.naturalWidth;
         canvas.height = image.naturalHeight;
         let ctx = canvas.getContext('2d');
@@ -54,7 +51,6 @@ function downloadPng(element) {
         setTimeout(() => {
             let pngUrl = canvas.toDataURL();
             download(pngUrl, getName(element) + '.png');
-            console.log(canvas);
             element.parentElement.removeChild(canvas);
             element.parentElement.removeChild(image);
         }, 100);
@@ -64,7 +60,6 @@ function downloadPng(element) {
 
 function svgOnClick(element, event) {
     if (event.ctrlKey) {
-        console.log('Ctrl+Clicked on', element, 'with event', event);
         downloadSvg(element);
         downloadPng(element);
     }
